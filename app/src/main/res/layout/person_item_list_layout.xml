@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+
+    <ImageButton
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:srcCompat="@mipmap/ic_status"
+        android:id="@+id/imgBtn_status_list"
+        android:background="@android:color/transparent"
+        android:layout_alignParentTop="true"
+        android:elevation="13dp"
+        android:scaleType="fitXY" />
+
+    <TextView
+        android:text="John Doe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_user_list"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="31dp" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_delete"
+        android:id="@+id/imageButton5"
+        android:background="@android:color/transparent"
+        android:onClick=""
+        android:layout_marginEnd="24dp"
+        android:layout_alignBottom="@+id/img_status_list"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text="Connecté"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_status_list"
+        android:textSize="12dp"
+        android:layout_alignBottom="@+id/img_status_list"
+        android:layout_toEndOf="@+id/img_status_list" />
+
+    <ImageView
+        android:layout_width="20dip"
+        android:layout_height="20dip"
+        app:srcCompat="@mipmap/ic_position"
+        android:id="@+id/img_status_list"
+        android:layout_below="@+id/tv_user_list"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>

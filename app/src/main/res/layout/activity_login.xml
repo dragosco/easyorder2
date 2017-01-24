@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_login"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="motacojo.mbds.fr.easyorder30.activities.LoginActivity"
+    android:background="@color/colorPrimary">
+
+    <TextView
+        android:text="@string/please_login_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:id="@+id/textView" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:ems="10"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="49dp"
+        android:id="@+id/input_Email_Login"
+        android:hint="@string/email_placeholder"
+        android:drawablePadding="6dip"
+        android:drawableLeft="@drawable/ic_person_black_24dp"
+        android:padding="10dp"
+        android:background="@drawable/input_style"/>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:layout_below="@+id/input_Email_Login"
+        android:layout_alignEnd="@+id/input_Email_Login"
+        android:layout_marginTop="14dp"
+        android:id="@+id/input_Mdp_Login"
+        android:hint="@string/password_placeholder"
+        android:drawablePadding="6dip"
+        android:drawableLeft="@drawable/ic_vpn_key_black_24dp"
+        android:padding="10dp"
+        android:background="@drawable/input_style"/>
+
+    <TextView
+        android:text="@string/forgotten_password_link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_Login_Login"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="15dp"
+        android:id="@+id/textView2" />
+
+    <Button
+        android:text="@string/signup_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:id="@+id/btn_Signup_Login"
+        android:textAllCaps="false"
+        android:layout_below="@+id/textView2"
+        android:layout_alignEnd="@+id/input_Mdp_Login" />
+
+    <Button
+        android:text="@string/login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="29dp"
+        android:id="@+id/btn_Login_Login"
+        android:layout_below="@+id/input_Mdp_Login"
+        android:layout_alignStart="@+id/input_Mdp_Login"
+        android:layout_alignEnd="@+id/input_Mdp_Login" />
+</RelativeLayout>

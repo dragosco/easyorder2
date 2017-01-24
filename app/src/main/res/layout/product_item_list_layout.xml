@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:text="Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/tv_productName_itemList" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/no_photo"
+        android:layout_below="@+id/tv_productName_itemList"
+        android:layout_marginTop="12dp"
+        android:id="@+id/img_productImage_itemList"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text="Price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_productPrice_itemList"
+        android:layout_marginTop="35dp"
+        android:layout_below="@+id/tv_productDescr_itemList"
+        android:layout_alignStart="@+id/img_productImage_itemList"
+        android:textStyle="normal|bold"
+        android:textColor="@android:color/holo_orange_dark" />
+
+    <TextView
+        android:text="Type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_productType_itemList"
+        android:layout_above="@+id/tv_productDiscount_itemList"
+        android:layout_alignStart="@+id/tv_productPrice_itemList"
+        android:textStyle="normal|bold"
+        android:textColor="@android:color/holo_orange_dark" />
+
+    <TextView
+        android:text="Description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_productDescr_itemList"
+        android:layout_below="@+id/img_productImage_itemList"
+        android:layout_alignStart="@+id/img_productImage_itemList"
+        android:layout_alignEnd="@+id/img_productImage_itemList"
+        android:textSize="10sp"
+        android:textAlignment="center" />
+
+    <TextView
+        android:text="Calories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_productCalories_itemList"
+        android:textStyle="normal|bold"
+        android:textColor="@android:color/holo_orange_dark"
+        android:layout_marginEnd="32dp"
+        android:layout_above="@+id/tv_productDiscount_itemList"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text="Discount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_productDiscount_itemList"
+        android:textStyle="normal|bold"
+        android:textColor="@android:color/holo_orange_dark"
+        android:layout_alignBaseline="@+id/tv_productPrice_itemList"
+        android:layout_alignBottom="@+id/tv_productPrice_itemList"
+        android:layout_alignStart="@+id/tv_productCalories_itemList" />
+</RelativeLayout>
