@@ -1,6 +1,10 @@
 package motacojo.mbds.fr.easyorder30.entities;
 
+import org.json.JSONObject;
+
 import java.util.Date;
+
+import motacojo.mbds.fr.easyorder30.utils.GlobalVariables;
 
 public class Product {
 
@@ -103,6 +107,23 @@ public class Product {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public static Product getById(GlobalVariables globalVariables, String id) {
+        return globalVariables.getAllProducts().get(id);
+    }
+
+    public static Product parseJSON(JSONObject product) {
+        Product p = new Product(
+                product.optString("name", "Produit Inconnu"),
+                product.optString("description", "Pas de description"),
+                Integer.parseInt(product.optString("price", "0")),
+                Integer.parseInt(product.optString("calories", "0")),
+                product.optString("type", "Inconnu"),
+                product.optString("picture", "none"),
+                Integer.parseInt(product.optString("discount", "0")));
+        p.setId(product.optString("id", "99999999999999999999999"));
+        return p;
     }
 }
 

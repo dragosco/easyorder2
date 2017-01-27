@@ -1,6 +1,10 @@
 package motacojo.mbds.fr.easyorder30.entities;
 
+import org.json.JSONObject;
+
 import java.util.Date;
+
+import motacojo.mbds.fr.easyorder30.utils.GlobalVariables;
 
 /**
  * Created by thais on 21/10/2016.
@@ -19,6 +23,16 @@ public class Person {
     private boolean connected;
     private Date creadtedAt;
     private Date updatedAt;
+
+    public Person() {
+        this.nom = "Etchebest";
+        this.prenom = "Philippe";
+        this.sexe = "masculin";
+        this.telephone = "+3366666666666";
+        this.email = "etchebest@topchef.fr";
+        this.createdBy = "Thais & Dragos";
+        this.password = "pass";
+    }
 
     public Person(String nom, String prenom, String sexe, String telephone, String email, String password) {
         this.nom = nom;
@@ -120,5 +134,22 @@ public class Person {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public static Person getById(GlobalVariables globalVariables, String id) {
+        return globalVariables.getAllUsers().get(id);
+    }
+
+    public static Person parseJSON(JSONObject person) {
+        Person p = new Person(
+                person.optString("nom", "John"),
+                person.optString("prenom", "John"),
+                person.optString("sexe", "John"),
+                person.optString("telephone", "John"),
+                person.optString("email", "John"),
+                person.optString("password", "John"));
+        p.setConnected(person.optBoolean("connected", false));
+        p.setId(person.optString("id", "99999999999999999999999"));
+        return p;
     }
 }

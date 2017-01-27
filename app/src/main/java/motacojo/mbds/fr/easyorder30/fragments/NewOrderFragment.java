@@ -1,11 +1,11 @@
 package motacojo.mbds.fr.easyorder30.fragments;
 
-import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +27,7 @@ import java.util.List;
 import motacojo.mbds.fr.easyorder30.R;
 import motacojo.mbds.fr.easyorder30.adapters.ProductItemAdapter;
 import motacojo.mbds.fr.easyorder30.entities.Product;
+import motacojo.mbds.fr.easyorder30.utils.GlobalVariables;
 
 public class NewOrderFragment extends Fragment {
 
@@ -36,6 +37,14 @@ public class NewOrderFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.new_order_layout, container, false);
+        ListView lst = (ListView)view.findViewById(R.id.products_list_view);
+
+        GlobalVariables gv = (GlobalVariables) getActivity().getApplication();
+        List<Product> products = new ArrayList<>(gv.getAllProducts().values());
+
+        ProductItemAdapter adapter = new ProductItemAdapter(getContext(), products);
+        lst.setAdapter(adapter);
+
         return view;
     }
 

@@ -15,17 +15,6 @@
         android:elevation="13dp"
         android:scaleType="fitXY" />
 
-    <TextView
-        android:text="John Doe"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_user_list"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="31dp" />
-
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,7 +27,7 @@
         android:layout_alignParentEnd="true" />
 
     <TextView
-        android:text="Connecté"
+        android:text="@string/status_online"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/tv_status_list"
@@ -52,6 +41,17 @@
         app:srcCompat="@mipmap/ic_position"
         android:id="@+id/img_status_list"
         android:layout_below="@+id/tv_user_list"
-        android:layout_centerHorizontal="true" />
+        android:layout_toEndOf="@+id/imgBtn_status_list" />
+
+    <TextView
+        android:text="John Doe"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_user_list"
+        android:textColor="@android:color/black"
+        android:textSize="18sp"
+        android:layout_marginTop="29dp"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/imgBtn_status_list" />
 
 </RelativeLayout>

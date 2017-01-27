@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">EasyOrder</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="app_name">Easy Order</string>
+    <string name="title_activity_main">Main</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
@@ -45,4 +45,11 @@
     <string name="taken_orders_title">Taken Orders</string>
     <string name="preparing_orders_title">Orders Being Prepared</string>
     <string name="notifications_title">Notifications</string>
+
+    <!-- Order Item List -->
+    <string name="order_cooker">Cooker: </string>
+    <string name="order_waiter">Waiter: </string>
+    <string name="order_amount">Total amount: </string>
+    <string name="order_discount">Total discount: </string>
+    <string name="order_total">Total: </string>
 </resources>
