@@ -1,5 +1,8 @@
 package motacojo.mbds.fr.easyorder30.activities;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -8,8 +11,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 import motacojo.mbds.fr.easyorder30.R;
 import motacojo.mbds.fr.easyorder30.entities.Person;
@@ -19,10 +24,16 @@ import motacojo.mbds.fr.easyorder30.fragments.NotificationsFragment;
 import motacojo.mbds.fr.easyorder30.fragments.PreparingOrdersFragment;
 import motacojo.mbds.fr.easyorder30.fragments.TakenOrdersFragment;
 import motacojo.mbds.fr.easyorder30.fragments.UsersFragment;
+import motacojo.mbds.fr.easyorder30.utils.GlobalVariables;
 import motacojo.mbds.fr.easyorder30.utils.ResourceLoader;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public Person connectedUser;
+    GlobalVariables gv;
+    TextView welcomeMessage;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +41,23 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+
+        connectedUser = new Person(
+                bundle.getString("nom"),
+                bundle.getString("prenom"),
+                bundle.getString("sexe"),
+                bundle.getString("telephone"),
+                bundle.getString("email"),
+                bundle.getString("password"));
+        connectedUser.setId(bundle.getString("id"));
+
+        Log.e("nom", connectedUser.getId());
+        gv = (GlobalVariables) getApplication();
+        gv.setConnectedUser(connectedUser);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -42,14 +70,12 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+
         ResourceLoader usersLoader = new ResourceLoader(MainActivity.this, Person.class, "http://95.142.161.35:8080/person/");
         usersLoader.execute();
 
         ResourceLoader productsLoader = new ResourceLoader(MainActivity.this, Product.class, "http://95.142.161.35:8080/product/");
         productsLoader.execute();
-
-        //ResourceLoader ordersLoader = new ResourceLoader(MainActivity.this, Order.class, "http://95.142.161.35:8080/menu/");
-        //ordersLoader.execute();
     }
 
     @Override
@@ -110,4 +136,26 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    public void showProgressDialog(boolean isVisible) {
+        if (isVisible) {
+            if(progressDialog==null) {
+                progressDialog = new ProgressDialog(MainActivity.this);
+                progressDialog.setMessage(getResources().getString(R.string.please_wait));
+                progressDialog.setCancelable(false);
+                progressDialog.setIndeterminate(true);
+                progressDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                    @Override
+                    public void onDismiss(DialogInterface dialog) {
+                        progressDialog = null;
+                    }
+                });
+                progressDialog.show();
+            }
+        }
+        else {
+            if(progressDialog!=null) {
+                progressDialog.dismiss();
+            }
+        }
+    }
 }

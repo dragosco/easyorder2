@@ -7,4 +7,5 @@
     <color name="colorContrast">#D5C7A7</color>
     <color name="colorOnlineUser">#55d400</color>
     <color name="colorOfflineUser">#d41c00</color>
+    <color name="colorWhite">#ffffff</color>
 </resources>

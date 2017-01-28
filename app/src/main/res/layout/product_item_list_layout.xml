@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:paddingBottom="3dp">
 
     <TextView
         android:text="Name"
@@ -74,4 +75,33 @@
         android:layout_alignBaseline="@+id/tv_productPrice_itemList"
         android:layout_alignBottom="@+id/tv_productPrice_itemList"
         android:layout_alignStart="@+id/tv_productCalories_itemList" />
+
+    <ImageButton
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_less"
+        android:id="@+id/img_btn_less_product"
+        android:background="@android:color/transparent"
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/tv_productName_itemList"
+        android:layout_alignParentStart="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_more"
+        android:id="@+id/img_btn_more_product"
+        android:background="@android:color/transparent"
+        android:layout_below="@+id/tv_productName_itemList"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:text="0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_product_qty"
+        android:textStyle="normal|bold"
+        android:textSize="25sp"
+        android:layout_alignBottom="@+id/tv_productDiscount_itemList"
+        android:layout_centerHorizontal="true" />
+
 </RelativeLayout>

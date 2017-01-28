@@ -52,4 +52,6 @@
     <string name="order_amount">Total amount: </string>
     <string name="order_discount">Total discount: </string>
     <string name="order_total">Total: </string>
+    <string name="new_order_submit">Submit order</string>
+    <string name="order_successfully_sent">The order has been successfully sent to the kitchen</string>
 </resources>

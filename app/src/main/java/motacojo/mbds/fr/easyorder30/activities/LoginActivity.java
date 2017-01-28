@@ -158,6 +158,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Bundle bundle = new Bundle();
                         bundle.putString("prenom",p.getPrenom());
                         bundle.putString("nom",p.getNom());
+                        bundle.putString("sexe",p.getSexe());
+                        bundle.putString("telephone",p.getTelephone());
+                        bundle.putString("email",p.getEmail());
+                        bundle.putString("password",p.getPassword());
+                        bundle.putString("id",p.getId());
+
                         intent.putExtras(bundle);
 
                         startActivity(intent);

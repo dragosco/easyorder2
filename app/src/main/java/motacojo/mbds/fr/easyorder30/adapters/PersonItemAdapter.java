@@ -66,6 +66,12 @@ public class PersonItemAdapter extends BaseAdapter {
         return v;
     }
 
+    @Override
+    public void notifyDataSetChanged()
+    {
+        super.notifyDataSetChanged();
+    }
+
     class PersonViewHolder{
         TextView nom_prenom;
         TextView connected;

@@ -1,8 +1,6 @@
 package motacojo.mbds.fr.easyorder30.utils;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -17,7 +15,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
 
-import motacojo.mbds.fr.easyorder30.R;
 import motacojo.mbds.fr.easyorder30.entities.Order;
 import motacojo.mbds.fr.easyorder30.entities.Person;
 import motacojo.mbds.fr.easyorder30.entities.Product;
@@ -31,7 +28,6 @@ public class ResourceLoader extends AsyncTask<String,Void,String> {
     private Activity activity;
     private String resourceUrlString;
     private Class resourceClass;
-    private ProgressDialog progressDialog;
 
     public ResourceLoader(Activity activity, Class resourceClass, String resourceUrlString) {
         this.activity = activity;
@@ -72,17 +68,16 @@ public class ResourceLoader extends AsyncTask<String,Void,String> {
     protected void onPreExecute() {
         super.onPreExecute();
         Log.e("ResourceLoader", "onPreExecute");
-        showProgressDialog(true);
     }
 
     @Override
     protected void onPostExecute(String result) {
         super.onPostExecute(result);
-        showProgressDialog(false);
 
         try {
             if (resourceClass == Person.class) {
                 parseJSONArray(Person.class, result);
+
             } else if (resourceClass == Product.class) {
                 parseJSONArray(Product.class, result);
             } else if (resourceClass == Order.class) {
@@ -93,30 +88,6 @@ public class ResourceLoader extends AsyncTask<String,Void,String> {
         } catch (JSONException e) {
             Log.e("ResourceLoader", "Invalid resource");
             e.printStackTrace();
-        }
-    }
-
-
-    public void showProgressDialog(boolean isVisible) {
-        if (isVisible) {
-            if(progressDialog==null) {
-                progressDialog = new ProgressDialog(activity);
-                progressDialog.setMessage(activity.getResources().getString(R.string.please_wait));
-                progressDialog.setCancelable(false);
-                progressDialog.setIndeterminate(true);
-                progressDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        progressDialog = null;
-                    }
-                });
-                progressDialog.show();
-            }
-        }
-        else {
-            if(progressDialog!=null) {
-                progressDialog.dismiss();
-            }
         }
     }
 

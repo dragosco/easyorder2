@@ -32,7 +32,7 @@ import motacojo.mbds.fr.easyorder30.utils.GlobalVariables;
 public class UsersFragment extends Fragment implements View.OnClickListener{
 
     View view;
-
+    PersonItemAdapter adapter;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,7 +41,7 @@ public class UsersFragment extends Fragment implements View.OnClickListener{
         GlobalVariables gv = (GlobalVariables) getActivity().getApplication();
         List<Person> users = new ArrayList<>(gv.getAllUsers().values());
 
-        PersonItemAdapter adapter = new PersonItemAdapter(getContext(), users, UsersFragment.this);
+        adapter = new PersonItemAdapter(getContext(), users, UsersFragment.this);
         lst.setAdapter(adapter);
 
         return view;
@@ -84,6 +84,7 @@ public class UsersFragment extends Fragment implements View.OnClickListener{
         System.out.println("TEST " + v.getTag());
         DeleteWaiter deleteWaiter = new DeleteWaiter();
         deleteWaiter.execute((String)v.getTag());
+
     }
 
 
@@ -130,7 +131,7 @@ public class UsersFragment extends Fragment implements View.OnClickListener{
             super.onPostExecute(result);
             Log.e("DeleteWaiter", "onPostExecute");
             showProgressDialog(false);
-
+            adapter.notifyDataSetChanged();
             try {
                 JSONObject resultJSON = new JSONObject(result);
                 if (result != null) {

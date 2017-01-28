@@ -14,6 +14,7 @@ public class Order {
     private int totalAmount;
     private double totalDiscount;
     private double total;
+    private String id;
 
     public Order(List<Product> items, Person cooker, Person waiter) {
         this.items = items;
@@ -86,5 +87,13 @@ public class Order {
             total += p.getDiscount()*0.01*p.getPrice();
         }
         return total;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

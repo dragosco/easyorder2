@@ -1,11 +1,11 @@
 package motacojo.mbds.fr.easyorder30.fragments;
 
-import android.support.v4.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,11 +34,13 @@ import motacojo.mbds.fr.easyorder30.utils.GlobalVariables;
 public class TakenOrdersFragment extends Fragment {
 
     View view;
+    GlobalVariables gv;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.taken_orders_layout, container, false);
+
         return view;
     }
 
@@ -46,6 +48,7 @@ public class TakenOrdersFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.e("LoadOrderList", "onCreate");
+        gv = (GlobalVariables) getActivity().getApplication();
 
         LoadOrderList ru = new LoadOrderList();
         ru.execute();
@@ -125,25 +128,46 @@ public class TakenOrdersFragment extends Fragment {
 
                 JSONArray list = new JSONArray(result);
                 for(int i = 0; i < list.length(); i++) {
-                    //Récupérer la commande i
+                    //Récupérer la commande
                     JSONObject order = list.getJSONObject(i);
 
-                    //Récupérer le serveur de la commande i
-                    JSONObject server = order.getJSONObject("server");
-                    Person waiter = Person.getById(gv, server.getString("id"));
-                    if (waiter != null) {
-                        //Récupérer la liste des items de la commande i
-                        JSONArray items = order.getJSONArray("items");
-                        List<Product> products = new ArrayList<>();
-                        for(int j = 0; j < items.length(); j++) {
-                            JSONObject itemId = items.getJSONObject(j);
-                            Product p = Product.getById(gv, itemId.getString("id"));
-                            products.add(p);
-                        }
-                        Order o = new Order(products, new Person(), waiter);
-                        orders.add(o);
+                    //Récupérer le serveur de la commande
+                    String serverId;
+                    try {
+                        //On essaie de récuperer l'object JSON 'server'
+                        JSONObject server = order.getJSONObject("server");
+                        serverId = server.optString("id", null);
+                    } catch (JSONException e) {
+                        //Si une exception est renvoyée, on considère l'id du serveur null
+                        serverId = null;
                     }
 
+                    //Si l'id du serveur est null, on ignore l'entrée
+                    //Sinon ...
+                    if (serverId != null) {
+                        //... on récupère la personne associée
+                        Person waiter = Person.getById(gv, serverId);
+                        //Si l'id ne correspond à personne, on ignore l'entrée
+                        //Sinon, tout va bien
+                        if (waiter != null) {
+                            //On récupère la liste des items de la commande i
+                            JSONArray items = order.getJSONArray("items");
+                            if (items.length() != 0) {
+                                List<Product> products = new ArrayList<>();
+                                for(int j = 0; j < items.length(); j++) {
+                                    JSONObject itemId = items.getJSONObject(j);
+                                    Product p = Product.getById(gv, itemId.getString("id"));
+                                    if (p != null) {
+                                        products.add(p);
+                                    }
+                                }
+                                Order o = new Order(products, new Person(), waiter);
+                                o.setId(order.getString("id"));
+                                orders.add(o);
+                            }
+
+                        }
+                    }
                 }
             } catch (JSONException e) {
                 Log.e("LoadPeopleList", "erreur");
@@ -154,4 +178,7 @@ public class TakenOrdersFragment extends Fragment {
             lst.setAdapter(adapter);
         }
     }
+
+
+
 }
