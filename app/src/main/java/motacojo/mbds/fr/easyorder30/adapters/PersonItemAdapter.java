@@ -45,15 +45,18 @@ public class PersonItemAdapter extends BaseAdapter {
         if(v==null){
             v = View.inflate(context, R.layout.person_item_list_layout, null);
             viewHolder = new PersonViewHolder();
+            viewHolder.imageButtonPhoto = (ImageButton) v.findViewById(R.id.imgBtn_status_list);
             viewHolder.nom_prenom= (TextView)v.findViewById(R.id.tv_user_list);
             viewHolder.connected = (TextView)v.findViewById(R.id.tv_status_list);
-            viewHolder.imageButton = (ImageButton) v.findViewById(R.id.imageButton5);
+            viewHolder.imageButtonDelete = (ImageButton) v.findViewById(R.id.imageButton5);
             v.setTag(viewHolder);
         }
         else{
             viewHolder = (PersonViewHolder) v.getTag();
         }
         Person person = people.get(position);
+        viewHolder.imageButtonPhoto.setOnClickListener(listener);
+        viewHolder.imageButtonPhoto.setTag(person);
         viewHolder.nom_prenom.setText(person.getFullName());
         viewHolder.connected.setText(person.isConnected() ? R.string.status_online : R.string.status_offline);
         if (person.isConnected()) {
@@ -61,8 +64,8 @@ public class PersonItemAdapter extends BaseAdapter {
         } else {
             viewHolder.connected.setTextColor(ContextCompat.getColor(context, R.color.colorOfflineUser));
         }
-        viewHolder.imageButton.setOnClickListener(listener);
-        viewHolder.imageButton.setTag(person.getId());
+        viewHolder.imageButtonDelete.setOnClickListener(listener);
+        viewHolder.imageButtonDelete.setTag(person.getId());
         return v;
     }
 
@@ -73,9 +76,10 @@ public class PersonItemAdapter extends BaseAdapter {
     }
 
     class PersonViewHolder{
+        ImageButton imageButtonPhoto;
         TextView nom_prenom;
         TextView connected;
-        ImageButton imageButton;
+        ImageButton imageButtonDelete;
     }
 
 }

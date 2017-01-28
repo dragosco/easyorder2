@@ -20,14 +20,7 @@ public class GlobalVariables extends Application {
     private HashMap<String, Product> allProducts = new HashMap<>();
     private HashMap<String, Order> allOrders = new HashMap<>();
     private HashMap<String, Integer> orderInProgress =  new HashMap<>();
-
-    public Person getConnectedUser() {
-        return connectedUser;
-    }
-
-    public void setConnectedUser(Person connectedUser) {
-        this.connectedUser = connectedUser;
-    }
+    private String token = "";
 
     public HashMap<String, Person> getAllUsers() {
         return allUsers;
@@ -81,8 +74,6 @@ public class GlobalVariables extends Application {
         } else {
             orderInProgress.put(productId, 1);
         }
-
-
     }
 
     public void removeProductFromOrder(String productId) {
@@ -96,5 +87,21 @@ public class GlobalVariables extends Application {
         } else {
             Log.e("removeProductFromOrder", "Produit innexistant");
         }
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public Person getConnectedUser() {
+        return connectedUser;
+    }
+
+    public void setConnectedUser(Person connectedUser) {
+        this.connectedUser = connectedUser;
     }
 }

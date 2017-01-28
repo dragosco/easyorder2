@@ -23,6 +23,7 @@ public class Person {
     private boolean connected;
     private Date creadtedAt;
     private Date updatedAt;
+    private String gcmKey;
 
     public Person() {
         this.nom = "Etchebest";
@@ -40,7 +41,7 @@ public class Person {
         this.sexe = sexe;
         this.telephone = telephone;
         this.email = email;
-        this.createdBy = prenom;
+        this.createdBy = "Thais & Dragos";
         this.password = password;
     }
 
@@ -136,6 +137,14 @@ public class Person {
         this.updatedAt = updatedAt;
     }
 
+    public String getGcmKey() {
+        return gcmKey;
+    }
+
+    public void setGcmKey(String gcmKey) {
+        this.gcmKey = gcmKey;
+    }
+
     public static Person getById(GlobalVariables globalVariables, String id) {
         return globalVariables.getAllUsers().get(id);
     }
@@ -150,6 +159,7 @@ public class Person {
                 person.optString("password", "John"));
         p.setConnected(person.optBoolean("connected", false));
         p.setId(person.optString("id", "99999999999999999999999"));
+        p.setGcmKey(person.optString("gcmKey", ""));
         return p;
     }
 }

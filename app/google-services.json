@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "546625501654",
+    "firebase_url": "https://easyorder2-4766c.firebaseio.com",
+    "project_id": "easyorder2-4766c",
+    "storage_bucket": "easyorder2-4766c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:546625501654:android:d958b9c1f46a8f95",
+        "android_client_info": {
+          "package_name": "motacojo.mbds.fr.easyorder30"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "546625501654-7mdhhtn29djkj7peimol1ul4ud95q9mu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWAsAgmZr6H2lX0CpFNLSJgzVzxTzo3EE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

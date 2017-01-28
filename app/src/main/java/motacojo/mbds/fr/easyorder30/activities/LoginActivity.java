@@ -1,16 +1,23 @@
 package motacojo.mbds.fr.easyorder30.activities;
 
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,13 +31,70 @@ import java.net.URL;
 
 import motacojo.mbds.fr.easyorder30.R;
 import motacojo.mbds.fr.easyorder30.entities.Person;
+import motacojo.mbds.fr.easyorder30.services.GCMRegistrationIntentService;
+import motacojo.mbds.fr.easyorder30.utils.GlobalVariables;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
+    GlobalVariables gv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        gv = (GlobalVariables) getApplication();
+
+        //Initializing broadcast receiver
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+
+            //When the broadcast received
+            //We are sending the broadcast from GCMRegistrationIntentService
+
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                //If the broadcast has received with success
+                //that means device is registered successfully
+                if(intent.getAction().equals(GCMRegistrationIntentService.REGISTRATION_SUCCESS)){
+                    //Getting the registration token from the intent
+                    gv.setToken(intent.getStringExtra("token"));
+                    String token = intent.getStringExtra("token");
+                    //Displaying the token as toast
+                    Toast.makeText(getApplicationContext(), "Registration token:" + token, Toast.LENGTH_LONG).show();
+
+                    //if the intent is not with success then displaying error messages
+                } else if(intent.getAction().equals(GCMRegistrationIntentService.REGISTRATION_ERROR)){
+                    Toast.makeText(getApplicationContext(), "GCM registration error!", Toast.LENGTH_LONG).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Error occurred", Toast.LENGTH_LONG).show();
+                }
+            }
+        };
+
+        //Checking play service is available or not
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
+
+        //if play service is not available
+        if(ConnectionResult.SUCCESS != resultCode) {
+            //If play service is supported but not installed
+            if(GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                //Displaying message that play service is not installed
+                Toast.makeText(getApplicationContext(), "Google Play Service is not install/enabled in this device!", Toast.LENGTH_LONG).show();
+                GooglePlayServicesUtil.showErrorNotification(resultCode, getApplicationContext());
+
+                //If play service is not supported
+                //Displaying an error message
+            } else {
+                Toast.makeText(getApplicationContext(), "This device does not support for Google Play Service!", Toast.LENGTH_LONG).show();
+            }
+
+            //If play service is available
+        } else {
+            //Starting intent to register device
+            Intent intent = new Intent(this, GCMRegistrationIntentService.class);
+            startService(intent);
+        }
 
         Button btnLog = (Button)findViewById(R.id.btn_Login_Login);
         btnLog.setOnClickListener(this);
@@ -54,6 +118,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
                 break;
         }
+    }
+
+    //Registering receiver on activity resume
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.w("MainActivity", "onResume");
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(GCMRegistrationIntentService.REGISTRATION_SUCCESS));
+        LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                new IntentFilter(GCMRegistrationIntentService.REGISTRATION_ERROR));
+    }
+
+
+    //Unregistering receiver on activity paused
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.w("MainActivity", "onPause");
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
     }
 
     ProgressDialog progressDialog;
@@ -153,6 +237,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                 user.getString("password"));
                         p.setConnected(user.getBoolean("connected"));
                         p.setId(user.getString("id"));
+                        p.setGcmKey(user.getString("gcmKey"));
+
+                        gv.setConnectedUser(p);
 
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                         Bundle bundle = new Bundle();
@@ -165,6 +252,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         bundle.putString("id",p.getId());
 
                         intent.putExtras(bundle);
+
+                        // verify if gcmKey received is the same as gv.token
+                        // if not http://95.142.161.35:8080/addkey/[user_id]/[key]/[firebase_key]
 
                         startActivity(intent);
                     } else {

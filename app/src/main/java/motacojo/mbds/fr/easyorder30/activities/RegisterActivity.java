@@ -29,6 +29,7 @@ import java.util.regex.Pattern;
 import motacojo.mbds.fr.easyorder30.R;
 import motacojo.mbds.fr.easyorder30.entities.Person;
 import motacojo.mbds.fr.easyorder30.utils.FormValidator;
+import motacojo.mbds.fr.easyorder30.utils.GlobalVariables;
 
 public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
     private EditText nom;
@@ -37,6 +38,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private EditText email;
     private EditText mdp;
     private EditText mdpConfirm;
+    GlobalVariables gv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +53,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         email      = (EditText)findViewById(R.id.input_Email_Register);
         mdp        = (EditText)findViewById(R.id.input_Mdp_Register);
         mdpConfirm = (EditText)findViewById(R.id.input_MdpConfirm_Register);
+        gv = (GlobalVariables) getApplication();
 
         FormValidator fdNom         = new FormValidator(nom);
         FormValidator fdPrenom      = new FormValidator(prenom);
@@ -78,6 +81,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     String txt_pass = mdp.getText().toString();
 
                     Person person = new Person(txt_nom, txt_prenom, txt_sexe, txt_telephone, txt_email, txt_pass);
+                    person.setGcmKey(gv.getToken());
 
                     RegisterUser ru = new RegisterUser();
                     ru.execute(person);
@@ -181,6 +185,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                 jsonParam.put("email", person.getEmail());
                 jsonParam.put("createdBy", "Thais & Dragos :D");
                 jsonParam.put("password", person.getPassword());
+                jsonParam.put("gcmKey", person.getGcmKey());
 
                 OutputStream out = urlConnection.getOutputStream();
                 out.write(jsonParam.toString().getBytes());
@@ -210,6 +215,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                         resultJSON.getString("password"));
                 p.setConnected(resultJSON.getBoolean("connected"));
                 p.setId(resultJSON.getString("id"));
+                p.setGcmKey(resultJSON.getString("gcmKey"));
                 return p;
             } catch (Exception e){
                 e.printStackTrace();
