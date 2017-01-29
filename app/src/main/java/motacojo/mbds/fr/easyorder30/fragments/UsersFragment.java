@@ -89,8 +89,6 @@ public class UsersFragment extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
         System.out.println("TEST " + v.getTag());
-        /*DeleteWaiter deleteWaiter = new DeleteWaiter();
-        deleteWaiter.execute((String)v.getTag());*/
 
         switch(v.getId()) {
             case R.id.imageButton5:
@@ -211,14 +209,6 @@ public class UsersFragment extends Fragment implements View.OnClickListener{
                 jsonParam.put("sender", senderJson);
 
                 Log.w("JsonParam", jsonParam.toString());
-                /*jsonParam.put("nom", person.getNom());
-                jsonParam.put("prenom", person.getPrenom());
-                jsonParam.put("sexe", person.getSexe());
-                jsonParam.put("telephone", person.getTelephone());
-                jsonParam.put("email", person.getEmail());
-                jsonParam.put("createdBy", "Thais & Dragos :D");
-                jsonParam.put("password", person.getPassword());
-                jsonParam.put("gcmKey", person.getGcmKey());*/
 
                 OutputStream out = urlConnection.getOutputStream();
                 out.write(jsonParam.toString().getBytes());
@@ -229,17 +219,6 @@ public class UsersFragment extends Fragment implements View.OnClickListener{
                 Log.e("RegisterUser", "\nSending 'POST' request to URL : " + url);
                 Log.e("RegisterUser", "Post parameters : " + in);
                 Log.e("RegisterUser", "Response Code : " + urlConnection.getResponseCode());
-
-                /*InputStream in = urlConnection.getInputStream();
-                BufferedReader rd = new BufferedReader(new InputStreamReader(in));
-
-                StringBuffer result = new StringBuffer();
-                String line = "";
-                while ((line = rd.readLine()) != null) {
-                    result.append(line);
-                }
-
-                return result.toString();*/
                 return "Push sent";
             } catch (Exception e) {
                 e.printStackTrace();
@@ -260,21 +239,6 @@ public class UsersFragment extends Fragment implements View.OnClickListener{
             showProgressDialog(false);
 
             Toast.makeText(getActivity(), result, Toast.LENGTH_LONG).show();
-            /*
-            try {
-                JSONObject resultJSON = new JSONObject(result);
-                if (result != null) {
-                    if(resultJSON.has("id")) {
-                        Toast.makeText(getActivity(),R.string.deleted_user_message, Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(getActivity(),"Une erreur s'est produite", Toast.LENGTH_LONG).show();
-                    }
-                }
-            } catch (JSONException e) {
-                Log.e("PushNotification", "erreur");
-                e.printStackTrace();
-            }
-            */
         }
     }
 }

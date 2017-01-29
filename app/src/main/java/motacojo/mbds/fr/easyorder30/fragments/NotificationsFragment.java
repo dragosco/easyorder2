@@ -151,6 +151,9 @@ public class NotificationsFragment extends Fragment {
                         b.setMessage(message);
                         buzzes.add(b);
                     }
+
+                    NotificationItemAdapter adapter = new NotificationItemAdapter(getContext(), buzzes);
+                    lst.setAdapter(adapter);
                 } else {
                     TextView emptyText = (TextView)getActivity().findViewById(android.R.id.empty);
                     lst.setEmptyView(emptyText);
@@ -158,9 +161,6 @@ public class NotificationsFragment extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-            NotificationItemAdapter adapter = new NotificationItemAdapter(getContext(), buzzes);
-            lst.setAdapter(adapter);
         }
     }
 }

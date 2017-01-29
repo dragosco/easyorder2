@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     GlobalVariables gv;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         gv = (GlobalVariables) getApplication();
 
-        //Initializing broadcast receiver
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
 
             //When the broadcast received
@@ -54,44 +54,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void onReceive(Context context, Intent intent) {
-                //If the broadcast has received with success
-                //that means device is registered successfully
-                if(intent.getAction().equals(MyInstanceIDListenerService.REGISTRATION_SUCCESS)){
-                    //Getting the registration token from the intent
-                    gv.setToken(intent.getStringExtra("token"));
-                    //String token = intent.getStringExtra("token");
-                    //Displaying the token as toast
-                    //Toast.makeText(getApplicationContext(), "Registration token:" + token, Toast.LENGTH_LONG).show();
-
-                    //if the intent is not with success then displaying error messages
-                } else if(intent.getAction().equals(MyInstanceIDListenerService.REGISTRATION_ERROR)){
-                    Toast.makeText(getApplicationContext(), "GCM registration error!", Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Error occurred", Toast.LENGTH_LONG).show();
-                }
+            if(intent.getAction().equals(MyInstanceIDListenerService.REGISTRATION_SUCCESS)){
+                gv.setToken(intent.getStringExtra("token"));
+            } else if(intent.getAction().equals(MyInstanceIDListenerService.REGISTRATION_ERROR)){
+                Toast.makeText(getApplicationContext(), "GCM registration error!", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getApplicationContext(), "Error occurred", Toast.LENGTH_LONG).show();
+            }
             }
         };
 
-        //Checking play service is available or not
         int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(getApplicationContext());
 
-        //if play service is not available
         if(ConnectionResult.SUCCESS != resultCode) {
-            //If play service is supported but not installed
             if(GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                //Displaying message that play service is not installed
                 Toast.makeText(getApplicationContext(), "Google Play Service is not install/enabled in this device!", Toast.LENGTH_LONG).show();
                 GooglePlayServicesUtil.showErrorNotification(resultCode, getApplicationContext());
-
-                //If play service is not supported
-                //Displaying an error message
             } else {
                 Toast.makeText(getApplicationContext(), "This device does not support for Google Play Service!", Toast.LENGTH_LONG).show();
             }
-
-            //If play service is available
         } else {
-            //Starting intent to register device
             Intent intent = new Intent(this, MyInstanceIDListenerService.class);
             startService(intent);
         }
@@ -131,7 +113,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 new IntentFilter(MyInstanceIDListenerService.REGISTRATION_ERROR));
     }
 
-
     //Unregistering receiver on activity paused
     @Override
     protected void onPause() {
@@ -140,7 +121,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
     }
 
-    ProgressDialog progressDialog;
     public void showProgressDialog(boolean isVisible) {
         if (isVisible) {
             if(progressDialog==null) {
@@ -226,7 +206,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 //Traiter la person
                 if (result != null) {
                     if((resultJSON.getBoolean("success"))) {
-                        //Toast.makeText(getApplicationContext(),R.string.inscription_ok, Toast.LENGTH_LONG).show();
                         JSONObject user = resultJSON.getJSONObject("user");
                         Person p = new Person(
                                 user.getString("nom"),
@@ -242,16 +221,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         gv.setConnectedUser(p);
 
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        /*Bundle bundle = new Bundle();
-                        bundle.putString("prenom",p.getPrenom());
-                        bundle.putString("nom",p.getNom());
-                        bundle.putString("sexe",p.getSexe());
-                        bundle.putString("telephone",p.getTelephone());
-                        bundle.putString("email",p.getEmail());
-                        bundle.putString("password",p.getPassword());
-                        bundle.putString("id",p.getId());
-
-                        intent.putExtras(bundle);*/
 
                         // verify if gcmKey received is the same as gv.token
                         // if not http://95.142.161.35:8080/addkey/[user_id]/[key]/[firebase_key]
@@ -269,8 +238,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }else{
                     Log.e("LoginActivity", "erreur");
                 }
-                //Renvoyer vers le login
-                //Fermer l'activité login
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -21,16 +21,12 @@ import motacojo.mbds.fr.easyorder30.fragments.NotificationsFragment;
 //Class is extending GcmListenerService
 public class MyGcmListenerService extends GcmListenerService {
 
-    //This method will be called on every new message received
     @Override
     public void onMessageReceived(String from, Bundle data) {
-        //Getting the message from the bundle
         String message = data.getString("message");
-        //Displaying a notiffication with the message
         sendNotification(message);
     }
 
-    //This method is generating a notification and displaying the notification
     private void sendNotification(String message) {
         Intent intent = new Intent(this, NotificationsFragment.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -44,6 +40,6 @@ public class MyGcmListenerService extends GcmListenerService {
                 .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(0, noBuilder.build()); //0 = ID of notification
+        notificationManager.notify(0, noBuilder.build());
     }
 }

@@ -55,9 +55,9 @@ public class NotificationItemAdapter extends BaseAdapter {
         }
 
         Buzz buzz = buzzes.get(position);
-        viewHolder.sender.setText(context.getString(R.string.buzz_sender) + buzz.getSender().getFullName());
-        viewHolder.date.setText(context.getString(R.string.buzz_when) + buzz.getSentDate().toString());
-        viewHolder.message.setText(context.getString(R.string.buzz_message) + buzz.getMessage());
+        viewHolder.sender.setText(context.getString(R.string.buzz_sender) + " " + buzz.getSender().getFullName());
+        viewHolder.date.setText(context.getString(R.string.buzz_when) + " " + buzz.getSentDate().toString());
+        viewHolder.message.setText(context.getString(R.string.buzz_message) + " " + buzz.getMessage());
         return v;
     }
 
