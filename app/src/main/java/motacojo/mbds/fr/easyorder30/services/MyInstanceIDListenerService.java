@@ -13,13 +13,13 @@ import motacojo.mbds.fr.easyorder30.R;
 /**
  * Created by thais on 28/01/2017.
  */
-public class GCMRegistrationIntentService extends IntentService {
+public class MyInstanceIDListenerService extends IntentService {
     //Constants for success and errors
     public static final String REGISTRATION_SUCCESS = "RegistrationSuccess";
     public static final String REGISTRATION_ERROR = "RegistrationError";
 
     //Class constructor
-    public GCMRegistrationIntentService() {
+    public MyInstanceIDListenerService() {
         super("");
     }
 

@@ -31,7 +31,7 @@ import java.net.URL;
 
 import motacojo.mbds.fr.easyorder30.R;
 import motacojo.mbds.fr.easyorder30.entities.Person;
-import motacojo.mbds.fr.easyorder30.services.GCMRegistrationIntentService;
+import motacojo.mbds.fr.easyorder30.services.MyInstanceIDListenerService;
 import motacojo.mbds.fr.easyorder30.utils.GlobalVariables;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
@@ -50,13 +50,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
 
             //When the broadcast received
-            //We are sending the broadcast from GCMRegistrationIntentService
+            //We are sending the broadcast from MyInstanceIDListenerService
 
             @Override
             public void onReceive(Context context, Intent intent) {
                 //If the broadcast has received with success
                 //that means device is registered successfully
-                if(intent.getAction().equals(GCMRegistrationIntentService.REGISTRATION_SUCCESS)){
+                if(intent.getAction().equals(MyInstanceIDListenerService.REGISTRATION_SUCCESS)){
                     //Getting the registration token from the intent
                     gv.setToken(intent.getStringExtra("token"));
                     //String token = intent.getStringExtra("token");
@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     //Toast.makeText(getApplicationContext(), "Registration token:" + token, Toast.LENGTH_LONG).show();
 
                     //if the intent is not with success then displaying error messages
-                } else if(intent.getAction().equals(GCMRegistrationIntentService.REGISTRATION_ERROR)){
+                } else if(intent.getAction().equals(MyInstanceIDListenerService.REGISTRATION_ERROR)){
                     Toast.makeText(getApplicationContext(), "GCM registration error!", Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(getApplicationContext(), "Error occurred", Toast.LENGTH_LONG).show();
@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             //If play service is available
         } else {
             //Starting intent to register device
-            Intent intent = new Intent(this, GCMRegistrationIntentService.class);
+            Intent intent = new Intent(this, MyInstanceIDListenerService.class);
             startService(intent);
         }
 
@@ -126,9 +126,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         super.onResume();
         Log.w("LoginActivity", "onResume");
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter(GCMRegistrationIntentService.REGISTRATION_SUCCESS));
+                new IntentFilter(MyInstanceIDListenerService.REGISTRATION_SUCCESS));
         LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
-                new IntentFilter(GCMRegistrationIntentService.REGISTRATION_ERROR));
+                new IntentFilter(MyInstanceIDListenerService.REGISTRATION_ERROR));
     }
 
 
@@ -242,7 +242,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         gv.setConnectedUser(p);
 
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        Bundle bundle = new Bundle();
+                        /*Bundle bundle = new Bundle();
                         bundle.putString("prenom",p.getPrenom());
                         bundle.putString("nom",p.getNom());
                         bundle.putString("sexe",p.getSexe());
@@ -251,18 +251,105 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         bundle.putString("password",p.getPassword());
                         bundle.putString("id",p.getId());
 
-                        intent.putExtras(bundle);
+                        intent.putExtras(bundle);*/
 
                         // verify if gcmKey received is the same as gv.token
                         // if not http://95.142.161.35:8080/addkey/[user_id]/[key]/[firebase_key]
+                        if(!p.getGcmKey().equals(gv.getToken())) {
+                            AddKeyTask addKeyTask = new AddKeyTask();
+                            addKeyTask.execute(p.getId(), gv.getToken());
+                        }
 
                         startActivity(intent);
+                        finish();
                     } else {
                         Toast.makeText(getApplicationContext(), resultJSON.getString("message"), Toast.LENGTH_LONG).show();
                     }
 
                 }else{
                     Log.e("LoginActivity", "erreur");
+                }
+                //Renvoyer vers le login
+                //Fermer l'activité login
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    class AddKeyTask extends AsyncTask<String,Void,String> {
+        @Override
+        protected String doInBackground(String... champs) {
+            try{
+                //[user_id]/[key]/[firebase_key]
+                String user_id = champs[0];
+                String gcm_key = champs[1];
+                String firebase_key = "AIzaSyBWAsAgmZr6H2lX0CpFNLSJgzVzxTzo3EE";
+                URL url = new URL("http://95.142.161.35:8080/addkey/" + user_id + "/" + gcm_key + "/" + firebase_key);
+
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("GET");
+                urlConnection.setDoInput(true);
+                urlConnection.setDoOutput(true);
+                urlConnection.setUseCaches (false);
+                urlConnection.setRequestProperty("Content-Type", "application/json");
+                urlConnection.connect();
+
+                /*JSONObject jsonParam = new JSONObject();
+                jsonParam.put("email", champs[0]);
+                jsonParam.put("password", champs[1]);
+
+                OutputStream out = urlConnection.getOutputStream();
+                out.write(jsonParam.toString().getBytes());
+                out.flush();
+                out.close();*/
+
+                InputStream in = urlConnection.getInputStream();
+                Log.e("AddKeyTask", "\nSending 'POST' request to URL : " + url);
+                Log.e("AddKeyTask", "Post parameters : " + in);
+                Log.e("AddKeyTask", "Response Code : " + urlConnection.getResponseCode());
+
+                BufferedReader rd = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+                StringBuffer result = new StringBuffer();
+                String line = "";
+                while ((line = rd.readLine()) != null) {
+                    result.append(line);
+                }
+
+                return result.toString();
+
+            } catch (Exception e){
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.e("AddKeyTask", "onPreExecute");
+            showProgressDialog(true);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            Log.e("AddKeyTask", "onPostExecute");
+            showProgressDialog(false);
+
+            try {
+                JSONObject resultJSON = new JSONObject(result);
+
+                if (result != null) {
+                    if((resultJSON.getBoolean("status"))) {
+                        //Toast.makeText(getApplicationContext(),R.string.inscription_ok, Toast.LENGTH_LONG).show();
+                        Log.e("LoginActivity.AddKey", resultJSON.getString("message"));
+                    } else {
+                        //Toast.makeText(getApplicationContext(), resultJSON.getString("message"), Toast.LENGTH_LONG).show();
+                        Log.e("LoginActivity.AddKey", "Key not added");
+                    }
+                }else{
+                    Log.e("LoginActivity.AddKey", "erreur");
                 }
                 //Renvoyer vers le login
                 //Fermer l'activité login

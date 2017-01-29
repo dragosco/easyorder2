@@ -19,7 +19,7 @@ import motacojo.mbds.fr.easyorder30.fragments.NotificationsFragment;
  */
 
 //Class is extending GcmListenerService
-public class GCMPushReceiverService extends GcmListenerService {
+public class MyGcmListenerService extends GcmListenerService {
 
     //This method will be called on every new message received
     @Override

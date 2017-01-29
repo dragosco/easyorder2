@@ -55,4 +55,10 @@
     <string name="order_total">Total: </string>
     <string name="new_order_submit">Submit order</string>
     <string name="order_successfully_sent">The order has been successfully sent to the kitchen</string>
+
+    <!-- Notification Item List -->
+    <string name="buzz_sender">Sender: </string>
+    <string name="buzz_when">When: </string>
+    <string name="buzz_message">Message: </string>
+    <string name="buzz_no_notification">No notification</string>
 </resources>

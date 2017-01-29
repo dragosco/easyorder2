@@ -58,7 +58,7 @@
         android:layout_below="@+id/btn_Login_Login"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:id="@+id/textView2" />
+        android:id="@+id/tv_noBuzzes" />
 
     <Button
         android:text="@string/signup_button"
@@ -67,7 +67,7 @@
         android:layout_marginTop="20dp"
         android:id="@+id/btn_Signup_Login"
         android:textAllCaps="false"
-        android:layout_below="@+id/textView2"
+        android:layout_below="@+id/tv_noBuzzes"
         android:layout_alignEnd="@+id/input_Mdp_Login"
         android:layout_alignStart="@+id/btn_Login_Login"
         android:textColor="@color/colorAccent"

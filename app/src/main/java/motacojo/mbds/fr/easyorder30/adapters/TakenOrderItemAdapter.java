@@ -46,7 +46,7 @@ public class TakenOrderItemAdapter extends BaseAdapter {
             viewHolder = new TakenOrderViewHolder();
 
             viewHolder.cooker = (TextView)v.findViewById(R.id.tv_orderCooker_itemList);
-            viewHolder.waiter = (TextView)v.findViewById(R.id.tv_orderWaiter_itemList);
+            viewHolder.waiter = (TextView)v.findViewById(R.id.tv_senderBuzz_itemList);
             viewHolder.totalAmount = (TextView)v.findViewById(R.id.tv_orderAmount_itemList);
             viewHolder.totalDiscount = (TextView)v.findViewById(R.id.tv_orderDiscount_itemList);
             viewHolder.total = (TextView)v.findViewById(R.id.tv_orderTotal_itemList);
@@ -59,7 +59,7 @@ public class TakenOrderItemAdapter extends BaseAdapter {
         Order order = orders.get(position);
         viewHolder.cooker.setText(order.getCooker().getPrenom());
         viewHolder.waiter.setText(order.getWaiter().getPrenom());
-        viewHolder.totalAmount.setText(order.getTotalAmount() + "€");
+        viewHolder.totalAmount.setText(String.format("%.2f", order.getTotalAmount()) + "€");
         viewHolder.totalDiscount.setText("- " + String.format("%.2f", order.getTotalDiscount()) + "€");
         viewHolder.total.setText(String.format("%.2f", order.getTotal()) + "€");
         return v;

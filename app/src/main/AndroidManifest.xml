@@ -52,7 +52,7 @@
         <!--
             GCM Receiver Service
         -->
-        <service android:name=".services.GCMPushReceiverService" android:exported="false">
+        <service android:name=".services.MyGcmListenerService" android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
             </intent-filter>
@@ -63,11 +63,15 @@
         <!--
             GCM Registration Intent Service
         -->
-        <service android:name=".services.GCMRegistrationIntentService" android:exported="false">
+        <service android:name=".services.MyInstanceIDListenerService" android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.gms.iid.InstanceID"/>
             </intent-filter>
         </service>
+
+        <service
+            android:name="com.google.android.gms.gcm.play.android.samples.com.gcmquickstart.RegistrationIntentService"
+            android:exported="false" />
     </application>
 
 </manifest>
