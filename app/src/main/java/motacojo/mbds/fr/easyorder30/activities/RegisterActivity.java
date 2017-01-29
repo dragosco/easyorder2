@@ -241,6 +241,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             //Traiter la person
             if (person!=null) {
                 startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+                finish();
             }else{
             }
             //Renvoyer vers le login
