@@ -31,7 +31,6 @@ import java.util.List;
 import java.util.Map;
 
 import motacojo.mbds.fr.easyorder30.R;
-import motacojo.mbds.fr.easyorder30.activities.MainActivity;
 import motacojo.mbds.fr.easyorder30.adapters.ProductItemAdapter;
 import motacojo.mbds.fr.easyorder30.entities.Order;
 import motacojo.mbds.fr.easyorder30.entities.Person;
@@ -123,12 +122,12 @@ public class NewOrderFragment extends Fragment implements View.OnClickListener {
                         items.add(Product.getById(gv, productId));
                     }
                 }
-                Order newOrder = new Order(items, new Person(), ((MainActivity)getActivity()).connectedUser);
+                Order newOrder = new Order(items, new Person(), gv.getConnectedUser());
                 for (Product p : newOrder.getItems()) {
                     Log.e("item", p.getId());
                 }
 
-                Log.e("waiter", ((MainActivity)getActivity()).connectedUser.getId());
+                Log.e("waiter", gv.getConnectedUser().getId());
                 SubmitOrder so = new SubmitOrder();
                 so.execute(newOrder);
                 break;

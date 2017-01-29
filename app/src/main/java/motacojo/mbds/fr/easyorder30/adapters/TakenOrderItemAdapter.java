@@ -57,11 +57,11 @@ public class TakenOrderItemAdapter extends BaseAdapter {
         }
 
         Order order = orders.get(position);
-        viewHolder.cooker.setText(context.getString(R.string.order_cooker) + order.getCooker().getFullName());
-        viewHolder.waiter.setText(context.getString(R.string.order_waiter) + order.getWaiter().getFullName());
-        viewHolder.totalAmount.setText(context.getString(R.string.order_amount) + order.getTotalAmount() + "€");
-        viewHolder.totalDiscount.setText(context.getString(R.string.order_discount) + String.format("%.2f", order.getTotalDiscount()) + "€");
-        viewHolder.total.setText(context.getString(R.string.order_total) + String.format("%.2f", order.getTotal()) + "€");
+        viewHolder.cooker.setText(order.getCooker().getPrenom());
+        viewHolder.waiter.setText(order.getWaiter().getPrenom());
+        viewHolder.totalAmount.setText(order.getTotalAmount() + "€");
+        viewHolder.totalDiscount.setText("- " + String.format("%.2f", order.getTotalDiscount()) + "€");
+        viewHolder.total.setText(String.format("%.2f", order.getTotal()) + "€");
         return v;
     }
 

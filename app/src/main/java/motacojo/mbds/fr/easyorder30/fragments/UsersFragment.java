@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ public class UsersFragment extends Fragment implements View.OnClickListener{
 
     PersonItemAdapter adapter;
     GlobalVariables gv;
+    ImageButton buzzer;
 
     @Nullable
     @Override
@@ -45,6 +47,7 @@ public class UsersFragment extends Fragment implements View.OnClickListener{
         gv = (GlobalVariables) getActivity().getApplication();
         List<Person> users = new ArrayList<>(gv.getAllUsers().values());
 
+        buzzer = (ImageButton)view.findViewById(R.id.imgBtn_status_list);
         adapter = new PersonItemAdapter(getContext(), users, UsersFragment.this);
         lst.setAdapter(adapter);
 
@@ -97,6 +100,7 @@ public class UsersFragment extends Fragment implements View.OnClickListener{
             case R.id.imgBtn_status_list:
                 PushNotification pushNotification = new PushNotification();
                 pushNotification.execute((Person)v.getTag());
+                ((ImageButton)view.findViewWithTag(v.getTag())).setColorFilter(getActivity().getResources().getColor(R.color.colorAccent));
                 break;
         }
     }
@@ -256,7 +260,6 @@ public class UsersFragment extends Fragment implements View.OnClickListener{
             showProgressDialog(false);
 
             Toast.makeText(getActivity(), result, Toast.LENGTH_LONG).show();
-
             /*
             try {
                 JSONObject resultJSON = new JSONObject(result);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_register"
     android:layout_width="match_parent"
@@ -8,7 +9,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="motacojo.mbds.fr.easyorder30.activities.RegisterActivity">
+    tools:context="motacojo.mbds.fr.easyorder30.activities.RegisterActivity"
+    android:background="@drawable/background_register">
 
     <EditText
         android:layout_width="wrap_content"
@@ -33,21 +35,12 @@
         android:id="@+id/input_Prenom_Register"
         android:hint="@string/first_name_placeholder"
         android:layout_below="@+id/input_Nom_Register"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
         android:textSize="14sp"
         android:layout_marginTop="18dp"
         android:padding="10dp"
-        android:background="@drawable/input_style"/>
-
-    <TextView
-        android:text="@string/please_signup_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_Message_Register"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="26dp" />
+        android:background="@drawable/input_style"
+        android:layout_alignStart="@+id/input_Nom_Register"
+        android:layout_alignEnd="@+id/input_Nom_Register" />
 
     <Button
         android:text="@string/validate_button"
@@ -55,55 +48,12 @@
         android:layout_height="wrap_content"
         android:id="@+id/btn_SignUp_Register"
         android:layout_below="@+id/input_MdpConfirm_Register"
-        android:layout_alignParentStart="true"
         android:layout_marginTop="24dp"
-        android:layout_alignParentEnd="true"
-        android:background="@android:color/holo_green_light" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/input_Nom_Register"
-        android:background="@drawable/input_style"
-        android:padding="10dp"
-        android:hint="@string/last_name_placeholder"
-        android:textSize="14sp"
-        android:layout_marginTop="22dp"
-        android:layout_below="@+id/tv_Message_Register"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
-
-    <RadioGroup
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/input_Prenom_Register"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/radioGroup_Sexe_register"
-        android:checkedButton="@+id/radioBtn_Masculin_Register">
-
-        <RadioButton
-            android:text="@string/female"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/radioBtn_Feminin_Register"
-            android:layout_marginEnd="66dp"
-            android:layout_below="@+id/input_Prenom_Register"
-            android:layout_alignParentEnd="true" />
-
-        <RadioButton
-            android:text="@string/male"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/radioBtn_Masculin_Register"
-            android:layout_below="@+id/input_Prenom_Register"
-            android:layout_alignEnd="@+id/radioGroup"
-            android:layout_marginEnd="22dp"
-            android:layout_weight="1" />
-
-    </RadioGroup>
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/colorContrast"
+        android:layout_alignStart="@+id/input_MdpConfirm_Register"
+        android:layout_alignEnd="@+id/input_MdpConfirm_Register"
+        android:elevation="14dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -114,11 +64,11 @@
         android:hint="@string/email_placeholder"
         android:textSize="14sp"
         android:layout_below="@+id/input_Tel_Register"
-        android:layout_alignParentStart="true"
         android:layout_marginTop="18dp"
         android:padding="10dp"
         android:background="@drawable/input_style"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignStart="@+id/input_Tel_Register"
+        android:layout_alignEnd="@+id/input_Tel_Register" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -129,11 +79,11 @@
         android:hint="@string/password_placeholder"
         android:textSize="14sp"
         android:layout_below="@+id/input_Email_Register"
-        android:layout_alignParentStart="true"
         android:layout_marginTop="18dp"
         android:padding="10dp"
         android:background="@drawable/input_style"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignStart="@+id/input_Email_Register"
+        android:layout_alignEnd="@+id/input_Email_Register" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -147,7 +97,65 @@
         android:padding="10dp"
         android:background="@drawable/input_style"
         android:layout_below="@+id/radioGroup_Sexe_register"
+        android:layout_alignStart="@+id/input_Prenom_Register"
+        android:layout_alignEnd="@+id/input_Prenom_Register" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/input_Nom_Register"
+        android:background="@drawable/input_style"
+        android:padding="10dp"
+        android:hint="@string/last_name_placeholder"
+        android:textSize="14sp"
+        android:layout_marginTop="22dp"
+        android:layout_below="@+id/tv_Message_Register"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_marginStart="30dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp" />
+
+    <TextView
+        android:text="@string/please_signup_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_Message_Register"
+        android:layout_marginTop="26dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorAccent" />
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioGroup_Sexe_register"
+        android:checkedButton="@+id/radioBtn_Masculin_Register"
+        android:layout_marginTop="11dp"
+        android:layout_below="@+id/input_Prenom_Register"
+        android:layout_alignStart="@+id/input_Prenom_Register">
+
+        <RadioButton
+            android:text="@string/male"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioBtn_Masculin_Register"
+            android:layout_below="@+id/input_Prenom_Register"
+            android:layout_alignEnd="@+id/radioGroup"
+            android:layout_marginEnd="22dp"
+            android:layout_weight="1"
+            android:textColor="@color/colorWhite" />
+
+        <RadioButton
+            android:text="@string/female"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioBtn_Feminin_Register"
+            android:layout_marginEnd="66dp"
+            android:layout_below="@+id/input_Prenom_Register"
+            android:layout_alignParentEnd="true"
+            android:textColor="@color/colorWhite" />
+
+    </RadioGroup>
 
 </RelativeLayout>

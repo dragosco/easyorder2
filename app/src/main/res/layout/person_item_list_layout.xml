@@ -8,7 +8,8 @@
     <ImageButton
         android:layout_width="100dp"
         android:layout_height="100dp"
-        app:srcCompat="@mipmap/ic_status"
+        android:tint="@color/colorSecondary"
+        app:srcCompat="@drawable/ic_status_black_24dp"
         android:id="@+id/imgBtn_status_list"
         android:background="@android:color/transparent"
         android:layout_alignParentTop="true"

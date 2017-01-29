@@ -43,10 +43,10 @@ public class MainActivity extends AppCompatActivity
 
         checkIfConnetedUserExists();
 
-        /*Intent intent = getIntent();
+        Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
-        connectedUser = new Person(
+        /*connectedUser = new Person(
                 bundle.getString("nom"),
                 bundle.getString("prenom"),
                 bundle.getString("sexe"),
@@ -76,6 +76,13 @@ public class MainActivity extends AppCompatActivity
 
         ResourceLoader productsLoader = new ResourceLoader(MainActivity.this, Product.class, "http://95.142.161.35:8080/product/");
         productsLoader.execute();
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+
+        fragmentManager.beginTransaction()
+                .replace(R.id.content_frame, new NewOrderFragment())
+                .commit();
+
     }
 
     private void checkIfConnetedUserExists() {

@@ -2,7 +2,11 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent" android:layout_height="match_parent"
-    android:paddingBottom="3dp">
+    android:background="@drawable/layer_list"
+    android:paddingBottom="10dp"
+    android:paddingTop="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
 
     <TextView
         android:text="Name"
@@ -10,7 +14,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/tv_productName_itemList" />
+        android:id="@+id/tv_productName_itemList"
+        android:textColor="@color/colorAccent"
+        android:textSize="16sp"
+        android:textAlignment="center"
+        android:textStyle="normal|italic" />
 
     <ImageView
         android:layout_width="wrap_content"
@@ -21,27 +29,6 @@
         android:id="@+id/img_productImage_itemList"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:text="Price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_productPrice_itemList"
-        android:layout_marginTop="35dp"
-        android:layout_below="@+id/tv_productDescr_itemList"
-        android:layout_alignStart="@+id/img_productImage_itemList"
-        android:textStyle="normal|bold"
-        android:textColor="@android:color/holo_orange_dark" />
-
-    <TextView
-        android:text="Type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_productType_itemList"
-        android:layout_above="@+id/tv_productDiscount_itemList"
-        android:layout_alignStart="@+id/tv_productPrice_itemList"
-        android:textStyle="normal|bold"
-        android:textColor="@android:color/holo_orange_dark" />
 
     <TextView
         android:text="Description"
@@ -55,46 +42,6 @@
         android:textAlignment="center" />
 
     <TextView
-        android:text="Calories"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_productCalories_itemList"
-        android:textStyle="normal|bold"
-        android:textColor="@android:color/holo_orange_dark"
-        android:layout_marginEnd="32dp"
-        android:layout_above="@+id/tv_productDiscount_itemList"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
-        android:text="Discount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tv_productDiscount_itemList"
-        android:textStyle="normal|bold"
-        android:textColor="@android:color/holo_orange_dark"
-        android:layout_alignBaseline="@+id/tv_productPrice_itemList"
-        android:layout_alignBottom="@+id/tv_productPrice_itemList"
-        android:layout_alignStart="@+id/tv_productCalories_itemList" />
-
-    <ImageButton
-        android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/ic_less"
-        android:id="@+id/img_btn_less_product"
-        android:background="@android:color/transparent"
-        android:layout_width="wrap_content"
-        android:layout_below="@+id/tv_productName_itemList"
-        android:layout_alignParentStart="true" />
-
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@mipmap/ic_more"
-        android:id="@+id/img_btn_more_product"
-        android:background="@android:color/transparent"
-        android:layout_below="@+id/tv_productName_itemList"
-        android:layout_alignParentEnd="true" />
-
-    <TextView
         android:text="0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -103,5 +50,68 @@
         android:textSize="25sp"
         android:layout_alignBottom="@+id/tv_productDiscount_itemList"
         android:layout_centerHorizontal="true" />
+
+    <ImageButton
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_less"
+        android:id="@+id/img_btn_less_product"
+        android:background="@android:color/transparent"
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/tv_productName_itemList"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@mipmap/ic_more"
+        android:id="@+id/img_btn_more_product"
+        android:background="@android:color/transparent"
+        android:layout_below="@+id/tv_productName_itemList"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="12dp" />
+
+    <TextView
+        android:text="Type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_productType_itemList"
+        android:textStyle="normal|bold"
+        android:textColor="@color/colorPrimary"
+        android:layout_above="@+id/tv_productDiscount_itemList"
+        android:layout_alignStart="@+id/img_btn_less_product" />
+
+    <TextView
+        android:text="Price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_productPrice_itemList"
+        android:layout_marginTop="33dp"
+        android:textStyle="normal|bold"
+        android:textColor="@color/colorPrimary"
+        android:layout_below="@+id/tv_productDescr_itemList"
+        android:layout_alignStart="@+id/tv_productType_itemList" />
+
+    <TextView
+        android:text="Discount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_productDiscount_itemList"
+        android:textStyle="normal|bold"
+        android:textColor="@color/colorPrimary"
+        android:layout_alignBaseline="@+id/tv_productPrice_itemList"
+        android:layout_alignBottom="@+id/tv_productPrice_itemList"
+        android:layout_alignStart="@+id/tv_productCalories_itemList" />
+
+    <TextView
+        android:text="Calories"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_productCalories_itemList"
+        android:textStyle="normal|bold"
+        android:textColor="@color/colorPrimary"
+        android:layout_alignTop="@+id/tv_product_qty"
+        android:layout_alignEnd="@+id/img_btn_more_product"
+        android:layout_marginEnd="16dp" />
 
 </RelativeLayout>
