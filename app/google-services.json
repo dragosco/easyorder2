@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "546625501654-ahnfh945a8mbaii5ovpch0129ajt8r0l.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "motacojo.mbds.fr.easyorder30",
+            "certificate_hash": "6223C1F42045727185A55218D81FA138DB48C6F1"
+          }
+        },
+        {
           "client_id": "546625501654-7mdhhtn29djkj7peimol1ul4ud95q9mu.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,8 +37,13 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "546625501654-7mdhhtn29djkj7peimol1ul4ud95q9mu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
           "status": 2

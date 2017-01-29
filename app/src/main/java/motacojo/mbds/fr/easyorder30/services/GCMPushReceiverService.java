@@ -12,7 +12,7 @@ import android.support.v4.app.NotificationCompat;
 import com.google.android.gms.gcm.GcmListenerService;
 
 import motacojo.mbds.fr.easyorder30.R;
-import motacojo.mbds.fr.easyorder30.activities.MainActivity;
+import motacojo.mbds.fr.easyorder30.fragments.NotificationsFragment;
 
 /**
  * Created by thais on 28/01/2017.
@@ -32,7 +32,7 @@ public class GCMPushReceiverService extends GcmListenerService {
 
     //This method is generating a notification and displaying the notification
     private void sendNotification(String message) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, NotificationsFragment.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         int requestCode = 0;
         PendingIntent pendingIntent = PendingIntent.getActivity(this, requestCode, intent, PendingIntent.FLAG_ONE_SHOT);

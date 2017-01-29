@@ -11,7 +11,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -40,7 +39,11 @@ public class MainActivity extends AppCompatActivity
 
         setContentView(R.layout.activity_main);
 
-        Intent intent = getIntent();
+        gv = (GlobalVariables) getApplication();
+
+        checkIfConnetedUserExists();
+
+        /*Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
 
         connectedUser = new Person(
@@ -53,8 +56,7 @@ public class MainActivity extends AppCompatActivity
         connectedUser.setId(bundle.getString("id"));
 
         Log.e("nom", connectedUser.getId());
-        gv = (GlobalVariables) getApplication();
-        gv.setConnectedUser(connectedUser);
+        gv.setConnectedUser(connectedUser);*/
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -76,6 +78,13 @@ public class MainActivity extends AppCompatActivity
         productsLoader.execute();
     }
 
+    private void checkIfConnetedUserExists() {
+        if(gv.getConnectedUser() == null) {
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            finish();
+        }
+    }
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -94,9 +103,18 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_sign_out:
+                /*MainActivity.SingOut signOut = new MainActivity.SingOut();
+                signOut.execute(txt_email, txt_password);*/
+                gv.setConnectedUser(null);
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                finish();
+                break;
+            case R.id.action_settings:
+                break;
+            default:
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -156,4 +174,112 @@ public class MainActivity extends AppCompatActivity
             }
         }
     }
+
+    /*class SingOut extends AsyncTask<String,Void,String> {
+        @Override
+        protected String doInBackground(String... champs) {
+            try {
+                URL url = new URL("http://95.142.161.35:8080/person/login");
+
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                urlConnection.setRequestMethod("POST");
+                urlConnection.setDoInput(true);
+                urlConnection.setDoOutput(true);
+                urlConnection.setUseCaches(false);
+                urlConnection.setRequestProperty("Content-Type", "application/json");
+                urlConnection.connect();
+
+                JSONObject jsonParam = new JSONObject();
+                jsonParam.put("email", champs[0]);
+                jsonParam.put("password", champs[1]);
+
+                OutputStream out = urlConnection.getOutputStream();
+                out.write(jsonParam.toString().getBytes());
+                out.flush();
+                out.close();
+
+                InputStream in = urlConnection.getInputStream();
+                Log.e("SingOut", "\nSending 'POST' request to URL : " + url);
+                Log.e("SingOut", "Post parameters : " + in);
+                Log.e("SingOut", "Response Code : " + urlConnection.getResponseCode());
+
+                BufferedReader rd = new BufferedReader(new InputStreamReader(in, "UTF-8"));
+                StringBuffer result = new StringBuffer();
+                String line = "";
+                while ((line = rd.readLine()) != null) {
+                    result.append(line);
+                }
+
+                return result.toString();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            Log.e("SingOut", "onPreExecute");
+            showProgressDialog(true);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            Log.e("SingOut", "onPostExecute");
+            showProgressDialog(false);
+
+            try {
+                JSONObject resultJSON = new JSONObject(result);
+
+                //Traiter la person
+                if (result != null) {
+                    if ((resultJSON.getBoolean("success"))) {
+                        //Toast.makeText(getApplicationContext(),R.string.inscription_ok, Toast.LENGTH_LONG).show();
+                        JSONObject user = resultJSON.getJSONObject("user");
+                        Person p = new Person(
+                                user.getString("nom"),
+                                user.getString("prenom"),
+                                user.getString("sexe"),
+                                user.getString("telephone"),
+                                user.getString("email"),
+                                user.getString("password"));
+                        p.setConnected(user.getBoolean("connected"));
+                        p.setId(user.getString("id"));
+                        p.setGcmKey(user.getString("gcmKey"));
+
+                        gv.setConnectedUser(p);
+
+                        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                        Bundle bundle = new Bundle();
+                        bundle.putString("prenom", p.getPrenom());
+                        bundle.putString("nom", p.getNom());
+                        bundle.putString("sexe", p.getSexe());
+                        bundle.putString("telephone", p.getTelephone());
+                        bundle.putString("email", p.getEmail());
+                        bundle.putString("password", p.getPassword());
+                        bundle.putString("id", p.getId());
+
+                        intent.putExtras(bundle);
+
+                        // verify if gcmKey received is the same as gv.token
+                        // if not http://95.142.161.35:8080/addkey/[user_id]/[key]/[firebase_key]
+
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getApplicationContext(), resultJSON.getString("message"), Toast.LENGTH_LONG).show();
+                    }
+
+                } else {
+                    Log.e("MainActivity", "erreur");
+                }
+                //Renvoyer vers le login
+                //Fermer l'activité login
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }*/
 }
