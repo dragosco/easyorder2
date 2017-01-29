@@ -94,6 +94,7 @@ public class UsersFragment extends Fragment implements View.OnClickListener{
             case R.id.imageButton5:
                 DeleteWaiter deleteWaiter = new DeleteWaiter();
                 deleteWaiter.execute((String)v.getTag());
+
                 break;
             case R.id.imgBtn_status_list:
                 PushNotification pushNotification = new PushNotification();
@@ -145,12 +146,15 @@ public class UsersFragment extends Fragment implements View.OnClickListener{
             super.onPostExecute(result);
             Log.e("DeleteWaiter", "onPostExecute");
             showProgressDialog(false);
-            adapter.notifyDataSetChanged();
+
             try {
                 JSONObject resultJSON = new JSONObject(result);
                 if (result != null) {
                     if(resultJSON.has("id")) {
                         Toast.makeText(getActivity(),R.string.deleted_user_message, Toast.LENGTH_LONG).show();
+                        Log.e("delete waiter", resultJSON.getString("id"));
+                        gv.removeUserFromAllUsers(resultJSON.getString("id"));
+
                     } else {
                         Toast.makeText(getActivity(),"Une erreur s'est produite", Toast.LENGTH_LONG).show();
                     }
@@ -159,6 +163,7 @@ public class UsersFragment extends Fragment implements View.OnClickListener{
                 Log.e("LoadPeopleList", "erreur");
                 e.printStackTrace();
             }
+            adapter.notifyDataSetChanged();
         }
     }
 

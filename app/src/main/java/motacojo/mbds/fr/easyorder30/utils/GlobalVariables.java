@@ -30,6 +30,9 @@ public class GlobalVariables extends Application {
         this.allUsers = allUsers;
     }
 
+    public void removeUserFromAllUsers(String id) {
+        allUsers.remove(id);
+    }
     public HashMap<String, Product> getAllProducts() {
         return allProducts;
     }

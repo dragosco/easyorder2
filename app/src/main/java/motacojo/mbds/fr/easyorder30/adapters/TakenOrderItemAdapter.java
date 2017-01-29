@@ -59,7 +59,7 @@ public class TakenOrderItemAdapter extends BaseAdapter {
         Order order = orders.get(position);
         viewHolder.cooker.setText(order.getCooker().getPrenom());
         viewHolder.waiter.setText(order.getWaiter().getPrenom());
-        viewHolder.totalAmount.setText(order.getTotalAmount() + "€");
+        viewHolder.totalAmount.setText(String.format("%.2f", (double) order.getTotalAmount()) + "€");
         viewHolder.totalDiscount.setText("- " + String.format("%.2f", order.getTotalDiscount()) + "€");
         viewHolder.total.setText(String.format("%.2f", order.getTotal()) + "€");
         return v;
