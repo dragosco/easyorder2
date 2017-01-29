@@ -152,10 +152,14 @@ public class NotificationsFragment extends Fragment {
                         buzzes.add(b);
                     }
 
+                    TextView emptyText = (TextView)getActivity().findViewById(R.id.tv_no_notifications);
+                    emptyText.setText("");
+
                     NotificationItemAdapter adapter = new NotificationItemAdapter(getContext(), buzzes);
                     lst.setAdapter(adapter);
                 } else {
-                    TextView emptyText = (TextView)getActivity().findViewById(android.R.id.empty);
+                    TextView emptyText = (TextView)getActivity().findViewById(R.id.tv_no_notifications);
+                    emptyText.setText(getString(R.string.buzz_no_notification));
                     lst.setEmptyView(emptyText);
                 }
             } catch (JSONException e) {
